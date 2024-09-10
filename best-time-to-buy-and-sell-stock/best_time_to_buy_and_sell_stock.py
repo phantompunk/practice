@@ -5,7 +5,9 @@ class Solution(object):
         :rtype: int
         """
         profit = 0
-        for i, x in enumerate(prices):
-            for y in prices[i+1:]:
-                profit = max(y-x, profit)
+        lowest = prices[0]
+        for x in prices:
+            diff = x - lowest
+            profit = max(diff, profit)
+            lowest = min(x, lowest)
         return profit
