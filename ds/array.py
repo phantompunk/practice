@@ -30,9 +30,9 @@ class ArrayList:
                 self.remove_at(i)
         return item
 
-    def remove_at(self, index: int):
+    def remove_at(self, index: int) -> bool:
         if self.n < index < 0:
-            return IndexError
+            raise IndexError()
 
         for i in range(index, self.n - 1):
             self.data[i] = self.data[i + 1]

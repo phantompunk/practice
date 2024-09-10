@@ -45,7 +45,7 @@ class Stack:
         node.next = self.head
         self.head = node
 
-    def search(self, value):
+    def search(self, value) -> int:
         """Return the index of the value."""
         index = 1
         curr = self.head
