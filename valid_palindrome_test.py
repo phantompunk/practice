@@ -12,11 +12,12 @@ class TestSolution(unittest.TestCase):
             expected: bool
 
         return [
-            Case(given="A man, a plan, a canal: Panama", expected=True),
-            Case(given="race a car", expected=False),
             Case(given=" ", expected=True),
             Case(given="abba", expected=True),
+            Case(given="Ab,:c cba", expected=True),
             Case(given="101101", expected=True),
+            Case(given="A man, a plan, a canal: Panama", expected=True),
+            Case(given="race a car", expected=False),
         ]
 
     def test_is_palindrome(self):
