@@ -1,7 +1,7 @@
 import unittest
 from dataclasses import dataclass
 
-from valid_parentheses.valid_parentheses import Solution
+from valid_parentheses import Solution
 
 
 class TestSolution(unittest.TestCase):

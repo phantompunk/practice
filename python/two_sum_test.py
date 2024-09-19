@@ -1,7 +1,7 @@
 import unittest
 from dataclasses import dataclass
 
-from two_sum.two_sum import Solution
+from two_sum import Solution
 
 
 class TestSolution(unittest.TestCase):
