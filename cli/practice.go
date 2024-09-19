@@ -105,7 +105,7 @@ func getProblemData(id, language string) (string, string, error) {
 	return "", snippet, nil
 }
 
-var extMapping = map[string]string{"python": ".py", "go": ".go"}
+var extMapping = map[string]string{"python": ".py", "python3": ".py", "go": ".go"}
 
 func createStubFiles(problem, language string) error {
 	_, snippet, err := getProblemData(problem, language)
@@ -115,6 +115,7 @@ func createStubFiles(problem, language string) error {
 
 	ext := string(extMapping[language])
 	problem = formatProblemName(problem)
+	language = formatLanguageName(language)
 	fileName := fmt.Sprintf("%s%s", problem, ext)
 	filePath := fmt.Sprintf("%s/%s", language, fileName)
 	fileTestName := fmt.Sprintf("%s_test%s", problem, ext)
@@ -144,10 +145,11 @@ func createStubFiles(problem, language string) error {
 	return nil
 }
 
-var numberToString = map[string]string{"1":"one","2":"two","3":"three","4":"four"}
+var numberToString = map[string]string{"1": "one", "2": "two", "3": "three", "4": "four"}
+
 func hasNumber(name string) bool {
 	for _, char := range name {
-		fmt.Println("Char:",char)
+		fmt.Println("Char:", char)
 		if '0' <= char && char <= '9' {
 			fmt.Println("Found")
 			return true
@@ -157,7 +159,7 @@ func hasNumber(name string) bool {
 }
 
 func convertNumberToWritten(name string) string {
-	letters := strings.Split(name, "") 
+	letters := strings.Split(name, "")
 	for i, letter := range letters {
 		if hasNumber(letter) {
 			written := numberToString[letter]
@@ -167,12 +169,19 @@ func convertNumberToWritten(name string) string {
 	return strings.Join(letters, "")
 }
 
+func formatLanguageName(name string) string {
+	if name == "python3" {
+		name = "python"
+	}
+	return name
+}
+
 func formatProblemName(name string) string {
 	if hasNumber(name) {
 		return convertNumberToWritten(name)
 	}
-	
-	return strings.ReplaceAll(name, "-","_")
+
+	return strings.ReplaceAll(name, "-", "_")
 }
 
 func downloadFunc(cmd *cobra.Command, args []string) error {
@@ -204,7 +213,7 @@ func main() {
 	}
 
 	downloadCmd.Flags().StringP("problem", "p", "", "LeetCode problem ID")
-	downloadCmd.Flags().StringP("language", "l", "python", "Programming language (default: python)")
+	downloadCmd.Flags().StringP("language", "l", "python3", "Programming language (default: python)")
 	cmd.AddCommand(downloadCmd)
 
 	viper.BindPFlag("problem", cmd.Flags().Lookup("problem"))
