@@ -7,12 +7,36 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 const leetCodeGraphQL = "https://leetcode.com/graphql"
+const pythonTestBase = `import unittest
+from dataclasses import dataclass
+
+from %s import Solution
+
+
+class TestSolution(unittest.TestCase):
+    def cases(self):
+        @dataclass
+        class Case:
+            given: int
+            expected: int
+
+        return [
+            Case(given=1, expected=1),
+        ]
+
+    def test_%s(self):
+        for case in self.cases():
+            sol = Solution()
+            actual = sol  
+            assert actual == case.expected  
+`
 
 type GraphQLRequest struct {
 	Query     string                 `json:"query"`
@@ -81,53 +105,6 @@ func getProblemData(id, language string) (string, string, error) {
 	return "", snippet, nil
 }
 
-func createStubbyFile(problemID, language string) error {
-	fmt.Println("Creating stub")
-	_, functionName, err := getProblemData(problemID, language)
-	if err != nil {
-		return err
-	}
-
-	fileName := fmt.Sprintf("%s.go", functionName)
-	filePath := fmt.Sprintf("%s/%s", language, fileName)
-	err = os.MkdirAll(fmt.Sprintf("%s", language), os.ModePerm)
-	if err != nil {
-		return err
-	}
-
-	content := fmt.Sprintf(`import unittest
-from dataclasses import dataclass
-
-from %s import Solution
-
-
-class TestSolution(unittest.TestCase):
-    def cases(self):
-        @dataclass
-        class Case:
-            given: int
-            expected: int
-
-        return [
-            Case(given=1, expected=1),
-        ]
-
-    def test_%s(self):
-        for case in self.cases():
-            sol = Solution()
-						actual = sol
-            assert actual == case.expected  
-`, functionName, functionName)
-
-	err = os.WriteFile(filePath, []byte(content), os.ModePerm)
-	if err != nil {
-		return err
-	}
-
-	fmt.Printf("Stub file '%s' created in '%s'\n", fileName, filePath)
-	return nil
-}
-
 var extMapping = map[string]string{"python": ".py", "go": ".go"}
 
 func createStubFiles(problem, language string) error {
@@ -137,7 +114,8 @@ func createStubFiles(problem, language string) error {
 	}
 
 	ext := string(extMapping[language])
-	fileName := fmt.Sprintf("%s%s", problem, ext) 
+	problem = formatProblemName(problem)
+	fileName := fmt.Sprintf("%s%s", problem, ext)
 	filePath := fmt.Sprintf("%s/%s", language, fileName)
 	fileTestName := fmt.Sprintf("%s_test%s", problem, ext)
 	fileTestPath := fmt.Sprintf("%s/%s", language, fileTestName)
@@ -148,36 +126,17 @@ func createStubFiles(problem, language string) error {
 		return err
 	}
 
-
-	content := fmt.Sprintf(`import unittest
-from dataclasses import dataclass
-
-from %s import Solution
-
-
-class TestSolution(unittest.TestCase):
-    def cases(self):
-        @dataclass
-        class Case:
-            given: int
-            expected: int
-
-        return [
-            Case(given=1, expected=1),
-        ]
-
-    def test_%s(self):
-        for case in self.cases():
-            sol = Solution()
-            actual = sol  
-            assert actual == case.expected  
-`, problem, problem)
+	var testContent string = ""
+	switch language {
+	case "python":
+		testContent = fmt.Sprintf(pythonTestBase, problem, problem)
+	}
 
 	err = os.WriteFile(filePath, []byte(snippet), os.ModePerm)
 	if err != nil {
 		return err
 	}
-	err = os.WriteFile(fileTestPath, []byte(content), os.ModePerm)
+	err = os.WriteFile(fileTestPath, []byte(testContent), os.ModePerm)
 	if err != nil {
 		return err
 	}
@@ -185,18 +144,49 @@ class TestSolution(unittest.TestCase):
 	return nil
 }
 
+var numberToString = map[string]string{"1":"one","2":"two","3":"three","4":"four"}
+func hasNumber(name string) bool {
+	for _, char := range name {
+		fmt.Println("Char:",char)
+		if '0' <= char && char <= '9' {
+			fmt.Println("Found")
+			return true
+		}
+	}
+	return false
+}
+
+func convertNumberToWritten(name string) string {
+	letters := strings.Split(name, "") 
+	for i, letter := range letters {
+		if hasNumber(letter) {
+			written := numberToString[letter]
+			letters[i] = written
+		}
+	}
+	return strings.Join(letters, "")
+}
+
+func formatProblemName(name string) string {
+	if hasNumber(name) {
+		return convertNumberToWritten(name)
+	}
+	
+	return strings.ReplaceAll(name, "-","_")
+}
+
 func downloadFunc(cmd *cobra.Command, args []string) error {
 	problemID, err := cmd.Flags().GetString("problem")
-	fmt.Println("Problem", problemID)
 	if err != nil {
 		return err
 	}
 	language, err := cmd.Flags().GetString("language")
-	fmt.Println("Language", language)
 	if err != nil {
 		return err
 	}
 
+	fmt.Println("Problem", problemID)
+	fmt.Println("Language", language)
 	return createStubFiles(problemID, language)
 }
 
