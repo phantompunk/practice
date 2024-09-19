@@ -92,12 +92,10 @@ func getProblemData(id, language string) (string, string, error) {
 	if err != nil {
 		return "", "", fmt.Errorf("Failed to unmarsharl response: %v", err)
 	}
-	fmt.Println(gqlResp.Data.Question.QuestionID)
 
 	var snippet string
 	for _, v := range gqlResp.Data.Question.CodeSnippets {
 		if v.LangSlug == language {
-			fmt.Println(v.Code)
 			snippet = v.Code
 			break
 		}
@@ -120,7 +118,6 @@ func createStubFiles(problem, language string) error {
 	filePath := fmt.Sprintf("%s/%s", language, fileName)
 	fileTestName := fmt.Sprintf("%s_test%s", problem, ext)
 	fileTestPath := fmt.Sprintf("%s/%s", language, fileTestName)
-	fmt.Println("FileName", filePath)
 
 	err = os.MkdirAll(fmt.Sprintf("%s", language), os.ModePerm)
 	if err != nil {
@@ -142,6 +139,7 @@ func createStubFiles(problem, language string) error {
 		return err
 	}
 	fmt.Printf("Stub file '%s' created in '%s'\n", fileName, filePath)
+	fmt.Printf("Stub file '%s' created in '%s'\n", fileTestName, fileTestPath)
 	return nil
 }
 
@@ -149,9 +147,7 @@ var numberToString = map[string]string{"1": "one", "2": "two", "3": "three", "4"
 
 func hasNumber(name string) bool {
 	for _, char := range name {
-		fmt.Println("Char:", char)
 		if '0' <= char && char <= '9' {
-			fmt.Println("Found")
 			return true
 		}
 	}
@@ -194,8 +190,7 @@ func downloadFunc(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	fmt.Println("Problem", problemID)
-	fmt.Println("Language", language)
+	fmt.Println("Problem:", problemID, "Language:", language)
 	return createStubFiles(problemID, language)
 }
 
