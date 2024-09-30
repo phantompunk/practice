@@ -1,7 +1,8 @@
 import unittest
 from dataclasses import dataclass
 
-from middle_of_the_linked_list import ListNode, Solution
+from middle_of_the_linked_list import Solution
+from utils import ListNode
 
 
 class TestSolution(unittest.TestCase):

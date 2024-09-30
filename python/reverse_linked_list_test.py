@@ -2,7 +2,8 @@ from typing import Optional
 import unittest
 from dataclasses import dataclass
 
-from reverse_linked_list import ListNode, Solution
+from reverse_linked_list import Solution
+from utils import ListNode
 
 
 class TestSolution(unittest.TestCase):

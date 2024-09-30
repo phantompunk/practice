@@ -2,7 +2,8 @@ from typing import Optional
 import unittest
 from dataclasses import dataclass
 
-from merge_two_sorted_lists import ListNode, Solution
+from merge_two_sorted_lists import Solution
+from utils import ListNode
 
 
 def areIdentical(head1, head2):

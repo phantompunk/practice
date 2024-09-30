@@ -1,27 +1,6 @@
-from __future__ import annotations
-from dataclasses import dataclass
 from typing import Optional
+from utils import ListNode
 
-
-@dataclass
-class ListNode:
-    val: int
-    next: Optional[ListNode]
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-    def add(self, data=0) -> ListNode:
-        if self.next is None:
-            self.next = ListNode(data)
-        return self
-    def addall(self, data: list[int]) -> ListNode:
-        curr = self
-        while curr.next:
-            curr = curr.next
-        for item in data:
-            curr.next = ListNode(item) 
-            curr = curr.next
-        return self
 
 class Solution:
     def mergeTwoLists(
