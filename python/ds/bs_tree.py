@@ -134,7 +134,7 @@ def post_order_traversal(root: Node | None, path: list = []) -> list:
         return path
 
     post_order_traversal(root.left, path)
-    post_order_traversal(root.left, path)
+    post_order_traversal(root.right, path)
     path.append(root.data)
 
     return path

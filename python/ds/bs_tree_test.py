@@ -57,7 +57,7 @@ def test_bst_postorder():
     bst.insert(10)
     bst.insert(5)
     bst.insert(15)
-    assert post_order_traversal(bst.root) == [5, 10, 15]
+    assert post_order_traversal(bst.root) == [5, 15, 10]
     
 def test_bst_levelorder():
     bst = BSTree()
