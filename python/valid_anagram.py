@@ -8,9 +8,11 @@ class Solution(object):
         if len(s) != len(t):
             return False
 
-        mappingS = {}
-        mappingT = {}
+        count_s = dict()
+        count_t = dict()
+
         for i in range(len(s)):
-            mappingS[s[i]] = 1 + mappingS.get(s[i], 0)
-            mappingT[t[i]] = 1 + mappingT.get(t[i], 0)
-        return mappingS == mappingT
+            count_s[s[i]] = 1 + count_s.get(s[i], 0)
+            count_t[t[i]] = 1 + count_t.get(t[i], 0)
+
+        return count_s == count_t
