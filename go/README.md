@@ -1,0 +1,1 @@
+package kata import ( "testing" ) func TestSol(t \*testing.T) { testCases := \[]struct { nums \[]int want \[]int }{ {\[]int{3}, \[]int{3}}, } for \_, tc := range testCases { got := Sol(tc.nums, tc.target) if !reflect.DeepEqual(got, tc.want) { t.Errorf("got %v want %v", got, tc.want) } } }
