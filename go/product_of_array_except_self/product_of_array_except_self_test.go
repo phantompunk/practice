@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestSol(t *testing.T) {
+func TestProductExceptSelf(t *testing.T) {
 	testCases := []struct {
 		nums []int
 		want []int

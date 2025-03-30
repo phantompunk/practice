@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestSol(t *testing.T) {
+func TestIsAnagram(t *testing.T) {
 	testCases := []struct {
 		strA string
 		strB string

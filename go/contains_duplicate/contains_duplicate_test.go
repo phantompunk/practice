@@ -1,27 +1,25 @@
 package kata
 
 import (
-	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
-func TestSol(t *testing.T) {
+func TestContainsDuplicate(t *testing.T) {
 	testCases := []struct {
-		strA string
-		strB string
-		want bool
+		name     string
+		input    []int
+		expected bool
 	}{
-		{"a", "b", false},
-		{"a", "a", true},
-		{"a", "aa", false},
+		// Add your test cases here
+		{"one is dupe", []int{1, 2, 1}, true},
 	}
 
 	for _, tc := range testCases {
-		t.Run(fmt.Sprintf("%s -> %s", tc.strA, tc.strB), func(t *testing.T) {
-			got := Sol(tc.strA, tc.strB)
-			if got != tc.want {
-				t.Errorf("got %v want %v", got, tc.want)
-			}
+		t.Run(tc.name, func(t *testing.T) {
+			result := containsDuplicate(tc.input)
+			assert.Equal(t, tc.expected, result)
 		})
 	}
 }

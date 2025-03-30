@@ -1,27 +1,24 @@
 package kata
 
 import (
-	"fmt"
-	"testing"
+        "testing"
+
+        "github.com/stretchr/testify/assert"
 )
 
-func TestSol(t *testing.T) {
-	testCases := []struct {
-		strA string
-		strB string
-		want bool
-	}{
-		{"a", "b", false},
-		{"a", "a", true},
-		{"a", "aa", false},
-	}
+func TestTopKFrequent(t *testing.T) {
+        testCases := []struct {
+                name     string
+                input    string
+                expected string
+        }{
+                // Add your test cases here
+        }
 
-	for _, tc := range testCases {
-		t.Run(fmt.Sprintf("%s -> %s", tc.strA, tc.strB), func(t *testing.T) {
-			got := Sol(tc.strA, tc.strB)
-			if got != tc.want {
-				t.Errorf("got %v want %v", got, tc.want)
-			}
-		})
-	}
+        for _, tc := range testCases {
+                t.Run(tc.name, func(t *testing.T) {
+                        result := topKFrequent(tc.input)
+                        assert.Equal(t, tc.expected, result)
+                })
+        }
 }

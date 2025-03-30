@@ -6,20 +6,20 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLongestPalindrome(t *testing.T) {
+func TestIsValid(t *testing.T) {
 	testCases := []struct {
 		name     string
 		input    string
-		expected int
+		target   string
+		expected bool
 	}{
-		// Add your test cases here
-		{"longest is 4", "cccc", 4},
-		{"longest is 7", "abccccdd", 7},
+		{name: "valid anagram", input: "anagram", target: "nagram", expected: true},
+		{name: "invalid anagram", input: "rat", target: "car", expected: true},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			result := longestPalindrome(tc.input)
+			result := isValid(tc.input)
 			assert.Equal(t, tc.expected, result)
 		})
 	}
