@@ -18,6 +18,9 @@ func TestIsAnagram(t *testing.T) {
 		{"rat", "car", false},
 		{"aacc", "ccac", false},
 		{"rat", "car", false},
+		{"listen", "silent", true},
+		{"triangle", "integral", true},
+		{"apple", "pale", false},
 	}
 
 	for _, tc := range testCases {

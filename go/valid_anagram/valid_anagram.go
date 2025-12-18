@@ -1,21 +1,27 @@
 package kata
 
-func isAnagram(s, t string) bool {
-	freqA := map[rune]int{}
-
-	for _, char := range s {
-		freqA[char]++
+// ::KATA START::
+func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
 	}
 
-	for _, char := range t {
-		if _, exists := freqA[char]; exists {
-			freqA[char]--
-		} else {
-			freqA[char]++
+	chars := map[rune]int{}
+	for _, r := range s {
+		chars[r]++
+	}
+
+	for _, r := range t {
+		if _, exists := chars[r]; !exists {
+			return false
 		}
-		if freqA[char] == 0 {
-			delete(freqA, char)
+
+		chars[r]--
+		if chars[r] < 0 {
+			return false
 		}
 	}
-	return len(freqA) == 0
+	return true
 }
+
+// ::KATA END::

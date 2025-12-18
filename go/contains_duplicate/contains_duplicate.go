@@ -1,13 +1,15 @@
 package kata
 
+// ::KATA START::
 func containsDuplicate(nums []int) bool {
-	seen := map[int]struct{}{}
+	hashSet := map[int]struct{}{}
 	for _, num := range nums {
-		if _, exists := seen[num]; exists {
+		if _, exists := hashSet[num]; exists {
 			return true
 		}
-		seen[num] = struct{}{}
+		hashSet[num] = struct{}{}
 	}
 
-	return false
+	return false 
 }
+// ::KATA END::

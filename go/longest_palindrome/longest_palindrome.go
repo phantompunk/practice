@@ -1,21 +1,23 @@
 package kata
 
-func longestPalindrome(phrase string) int {
-	freqMap := map[rune]int{}
-	for _, char := range phrase {
-		freqMap[char]++
+// ::KATA START::
+func longestPalindrome(s string) int {
+	freq := map[rune]int{}
+	for _, char := range s {
+		freq[char]++
 	}
 
 	result := 0
 	hasMiddle := false
-	for _, count := range freqMap {
-		if count%2 == 0 {
-			pairs := count / 2
-			result += pairs * 2
-		} else if !hasMiddle {
-			result++
+	for _, count := range freq {
+		pairs := (count / 2) * 2
+		if !hasMiddle && count%2 == 1 {
 			hasMiddle = true
+			pairs++
 		}
+		result += pairs
 	}
 	return result
 }
+
+// ::KATA END::
