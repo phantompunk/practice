@@ -2,21 +2,21 @@ package kata
 
 // ::KATA START::
 func longestPalindrome(s string) int {
-	freq := map[rune]int{}
-	for _, char := range s {
-		freq[char]++
+	letters := make(map[rune]int)
+	for _, r := range s {
+		letters[r]++
 	}
 
 	result := 0
 	hasMiddle := false
-	for _, count := range freq {
-		pairs := (count / 2) * 2
-		if !hasMiddle && count%2 == 1 {
-			hasMiddle = true
-			pairs++
+	for _, v := range letters {
+		result += 2*(v/2)
+		if !hasMiddle && v%2==1{
+			hasMiddle=true
+			result++
 		}
-		result += pairs
 	}
+
 	return result
 }
 

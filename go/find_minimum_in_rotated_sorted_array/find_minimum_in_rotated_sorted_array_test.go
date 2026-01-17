@@ -14,9 +14,9 @@ func TestFindMin(t *testing.T) {
 	}{
 		// Add your test cases here
 		{"init", []int{1}, 1},
-		{"init", []int{3, 1}, 1},
-		{"init", []int{3, 4, 5, 1, 2}, 1},
-		{"init", []int{4, 5, 6, 7, 0, 1, 2}, 0},
+		{"init1", []int{3, 1}, 1},
+		{"init2", []int{3, 4, 5, 1, 2}, 1},
+		{"init3", []int{4, 5, 6, 7, 0, 1, 2}, 0},
 	}
 
 	for _, tc := range testCases {

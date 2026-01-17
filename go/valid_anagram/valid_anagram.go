@@ -1,23 +1,21 @@
 package kata
 
+import "slices"
+
 // ::KATA START::
 func isAnagram(s string, t string) bool {
 	if len(s) != len(t) {
 		return false
 	}
 
-	chars := map[rune]int{}
-	for _, r := range s {
-		chars[r]++
+	letters := make(map[rune]int, len(s))
+	for _, char := range s {
+		letters[char]++
 	}
 
-	for _, r := range t {
-		if _, exists := chars[r]; !exists {
-			return false
-		}
-
-		chars[r]--
-		if chars[r] < 0 {
+	for _, char := range t {
+		letters[char]--
+		if letters[char] < 0 {
 			return false
 		}
 	}
@@ -25,3 +23,17 @@ func isAnagram(s string, t string) bool {
 }
 
 // ::KATA END::
+
+func isAnagramSort(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+
+	return sortStr(s) == sortStr(t)
+}
+
+func sortStr(s string) string {
+	runes := []rune(s)
+	slices.Sort(runes)
+	return string(runes)
+}

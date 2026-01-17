@@ -1,36 +1,41 @@
 package kata
 
-import "unicode"
-
 // ::KATA START::
 func isPalindrome(s string) bool {
-	if len(s) <= 1 {
-		return true
-	}
-
 	left, right := 0, len(s)-1
-	for left <= right {
-		for !isAlphanumeric(rune(s[left])) {
-			left++
-		}
 
-		for !isAlphanumeric(rune(s[right])) {
-			right--
-		}
+  for left < right {
+    for left < right && !isAlpha(s[left]) {
+      left++
+    }
 
-		if unicode.ToLower(rune(s[left])) != unicode.ToLower(rune(s[right])) {
+    for left < right && !isAlpha(s[right]) {
+      right--
+    }
+
+    if toLower(s[left]) != toLower(s[right]) {
       return false
-		}
+    }
 
     left++
     right--
-	}
+  }
 
 	return true
 }
 
-func isAlphanumeric(r rune) bool {
-	return unicode.IsDigit(r) || unicode.IsLetter(r)
+func isAlpha(l byte) bool {
+  if (l >= 'A' && l <= 'Z') || (l >= 'a' && l <= 'z') || (l >= '0' && l <= '9') {
+    return true
+  }
+	return false
+}
+
+func toLower(l byte) byte {
+  if l >= 'A' && l<='Z' {
+    return l + ' ' // 32
+  }
+	return l
 }
 
 // ::KATA END::

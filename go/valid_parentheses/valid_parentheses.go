@@ -1,25 +1,27 @@
 package kata
 
-func isValid(input string) bool {
-	top := -1
-	stack := []rune(input)
-	ends := map[rune]rune{
-		')': '(',
-		'}': '{',
-		']': '[',
+// ::KATA START::
+func isValid(s string) bool {
+	if len(s)%2 == 1 {
+		return false
 	}
 
-	for _, char := range input {
-		if open, exists := ends[char]; exists {
-			if top < 0 || stack[top] != open {
-				return false
-			}
-			top--
+	pairs := map[rune]rune{
+		'(': ')',
+		'{': '}',
+		'[': ']',
+	}
+	stack := []rune{}
+	for _, p := range s {
+		if val, found := pairs[p]; found {
+			stack = append(stack, val)
+		} else if len(stack) > 0 && stack[len(stack)-1] == p {
+			stack = stack[:len(stack)-1]
 		} else {
-			top++
-			stack[top] = char
+			return false
 		}
 	}
-
-	return top == -1
+	return len(stack) == 0
 }
+
+// ::KATA END::

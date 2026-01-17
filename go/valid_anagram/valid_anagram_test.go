@@ -2,6 +2,7 @@ package kata
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -30,5 +31,24 @@ func TestIsAnagram(t *testing.T) {
 				t.Errorf("got %v want %v", got, tc.want)
 			}
 		})
+	}
+}
+
+func BenchmarkIsAnagram(b *testing.B) {
+	s := strings.Repeat("abcdefghij", 100) // n = 1000
+	t := strings.Repeat("jihgfedcba", 100)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		isAnagram(s, t)
+	}
+}
+
+func BenchmarkIsAnagramSort(b *testing.B) {
+	s := strings.Repeat("abcdefghij", 100) // n = 1000
+	t := strings.Repeat("jihgfedcba", 100)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		isAnagramSort(s, t)
 	}
 }

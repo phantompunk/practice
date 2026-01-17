@@ -1,23 +1,35 @@
 package kata
 
+// ::KATA START::
 func productExceptSelf(nums []int) []int {
-	n := len(nums)
-	res := make([]int, n)
-	prefix := make([]int, n)
-	suffix := make([]int, n)
+	answer := make([]int, len(nums))
 
-	prefix[0] = 1
-	for i := 1; i < n; i++ {
-		prefix[i] = nums[i-1] * prefix[i-1]
+	prefix := 1
+	for i := range nums {
+		answer[i] = prefix
+		prefix *= nums[i]
 	}
 
-	suffix[n-1] = 1
-	for i := n - 2; i >= 0; i-- {
-		suffix[i] = nums[i+1] * suffix[i+1]
+	postfix := 1
+	for i := len(nums) - 1; i >= 0; i-- {
+		answer[i] *= postfix
+		postfix *= nums[i]
 	}
 
-	for i := 0; i < n; i++ {
-		res[i] = prefix[i] * suffix[i]
-	}
-	return res
+	return answer
 }
+
+// ::KATA END::
+
+// ans := make([]int, len(nums))
+// for i := range nums {
+// 	sub := 1
+// 	for j := range nums {
+// 		if i == j {
+// 			continue
+// 		}
+// 		sub *= nums[j]
+// 	}
+// 	ans[i] = sub
+// }
+// return ans

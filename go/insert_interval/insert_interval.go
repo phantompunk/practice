@@ -1,5 +1,6 @@
 package kata
 
+// ::KATA START::
 func insert(intervals [][]int, newInterval []int) [][]int {
 	results := [][]int{}
 
@@ -9,6 +10,7 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 			results = append(results, intervals[i:]...)
 			return results
 		}
+
 		if newInterval[0] > interval[1] {
 			results = append(results, interval)
 			continue
@@ -18,3 +20,5 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 	}
 	return append(results, newInterval)
 }
+
+// ::KATA END::

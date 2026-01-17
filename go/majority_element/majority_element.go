@@ -15,3 +15,23 @@ func majorityElement(nums []int) int {
 }
 
 // ::KATA END::
+
+// Brute force solution: Time O(n^2) Space O(1)
+// func majorityElement(nums []int) int {
+// 	n := len(nums)
+//
+// 	for i := range n {
+// 		count := 0
+// 		for j := range n {
+// 			if nums[i] == nums[j] {
+// 				count++
+// 			}
+// 		}
+//
+// 		if count > n/2 {
+// 			return nums[i]
+// 		}
+// 	}
+//
+// 	return -1
+// }

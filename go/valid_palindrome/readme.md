@@ -7,7 +7,7 @@ Given a string `s`, return `true` *if it is a **palindrome**, or* `false` *other
 **Example 1:**
 
 ```
-Input: s = "A man, a plan, a canal: Panama"
+Input: s = " A man, a plan, a canal: Panama"
 Output: true
 Explanation: "amanaplanacanalpanama" is a palindrome.
 ```

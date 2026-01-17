@@ -14,8 +14,16 @@ func TestIsValid(t *testing.T) {
 	}{
 		// Add your test cases here
 		{"base", "()", true},
+		{"mismatched", "){", false},
 		{"all", "()[]{}", true},
 		{"invalid", "(}", false},
+		{"nested", "([)]", false},
+		{"complex valid", "{[]}", true},
+		{"single opening", "(", false},
+		{"single closing", ")", false},
+		{"empty string", "", true},
+		{"long valid", "((()))[]{}", true},
+		{"long invalid", "((())]", false},
 	}
 
 	for _, tc := range testCases {
