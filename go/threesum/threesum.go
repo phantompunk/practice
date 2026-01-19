@@ -1,41 +1,34 @@
 package kata
 
-import "sort"
+import "slices"
 
+// ::KATA START::
 func threeSum(nums []int) [][]int {
-	results := [][]int{}
-	sort.Ints(nums)
+	results := make([][]int, 0, len(nums))
 
-	// iterate thru values
-	for i, n := range nums {
-		// i is the start or the same as the previous continue
-		if i > 0 && n == nums[i-1] {
-			continue
-		}
-
-		// set your pointers
-		l, r := i+1, len(nums)-1
-		// loop thru while l<r
-		for l < r {
-			// calculate the sume
-			x := n + nums[l] + nums[r]
-			if x > 0 {
-				r--
-			} else if x < 0 {
-				l++
-			} else {
-				results = append(results, []int{n, nums[l], nums[r]})
-				l++
-				// skip where the values are duplicated
-				for l < r && nums[l] == nums[l-1] {
-					l++
-				}
-				r--
-				for l < r && nums[r] == nums[r+1] {
-					r--
+	for i, n := 0, len(nums); i < n-2; i++ {
+		for j := i + 1; j < n-1; j++ {
+			for k := j + 1; k < n; k++ {
+				if nums[i]+nums[j]+nums[k] == 0 {
+					if !containsSlice(results, []int{nums[i], nums[j], nums[k]}) {
+						results = append(results, []int{nums[i], nums[j], nums[k]})
+					}
 				}
 			}
 		}
+
 	}
+
 	return results
 }
+
+func containsSlice(arrays [][]int, target []int) bool {
+	for _, arr := range arrays {
+		if slices.Equal(arr, target) {
+			return true
+		}
+	}
+	return false
+}
+
+// ::KATA END::
